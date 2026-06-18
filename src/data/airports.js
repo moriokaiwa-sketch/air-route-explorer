@@ -1,4 +1,4 @@
-export const airports = [
+export const AIRPORTS = [
   {
     "code": "HND",
     "name": "東京(羽田)",
