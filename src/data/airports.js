@@ -1,5 +1,18 @@
 export const AIRPORTS = [
   {
+    "code": "NRT",
+    "name": "東京(成田)",
+    "lat": 35.7719,
+    "lng": 140.3928,
+    "connections": [
+      "CTS",
+      "FUK",
+      "ITM",
+      "NGO",
+      "OKA"
+    ]
+  },
+  {
     "code": "HND",
     "name": "東京(羽田)",
     "lat": 35.5494,
@@ -67,6 +80,7 @@ export const AIRPORTS = [
       "MSJ",
       "MYJ",
       "NGS",
+      "NRT",
       "OIT",
       "OKA",
       "OKI",
@@ -98,6 +112,7 @@ export const AIRPORTS = [
       "HND",
       "ISG",
       "MMY",
+      "NRT",
       "OKA"
     ]
   },
@@ -117,6 +132,7 @@ export const AIRPORTS = [
       "KIJ",
       "KIX",
       "NGO",
+      "NRT",
       "SDJ"
     ]
   },
@@ -154,6 +170,7 @@ export const AIRPORTS = [
       "KMI",
       "KOJ",
       "MYJ",
+      "NRT",
       "OKA",
       "SDJ",
       "TKS"
@@ -176,6 +193,7 @@ export const AIRPORTS = [
       "MMD",
       "MMY",
       "NGO",
+      "NRT",
       "OGN",
       "OKJ",
       "RNJ",
