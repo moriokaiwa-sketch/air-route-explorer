@@ -12,7 +12,6 @@ export default function App() {
   const [destinationFilterCode, setDestinationFilterCode] = useState(null);
   const [routeFlights, setRouteFlights] = useState([]);
   const [panelHeight, setPanelHeight] = useState(40); // default height in vh
-  const dragRef = React.useRef(null);
 
   const isPanelOpen = selectedAirportCode || routeFlights.length > 0;
 
@@ -24,25 +23,9 @@ export default function App() {
 
   const selectedAirport = AIRPORTS.find(a => a.code === selectedAirportCode);
 
-  const handlePointerDown = (e) => {
-    if (window.innerWidth >= 768) return; // Only drag on mobile
-    e.target.setPointerCapture(e.pointerId);
-    dragRef.current = { startY: e.clientY, startHeight: panelHeight };
-  };
-
-  const handlePointerMove = (e) => {
-    if (!dragRef.current) return;
-    const deltaY = e.clientY - dragRef.current.startY;
-    const deltaVh = (deltaY / window.innerHeight) * 100;
-    let newHeight = dragRef.current.startHeight - deltaVh;
-    newHeight = Math.max(20, Math.min(newHeight, 85)); // clamp between 20vh and 85vh
-    setPanelHeight(newHeight);
-  };
-
-  const handlePointerUp = (e) => {
-    if (!dragRef.current) return;
-    e.target.releasePointerCapture(e.pointerId);
-    dragRef.current = null;
+  const handleTogglePanel = () => {
+    // Toggle between compact (40vh) and expanded (85vh)
+    setPanelHeight(prev => prev === 40 ? 85 : 40);
   };
 
   const handleSelectAirport = (clickedCode) => {
@@ -127,7 +110,7 @@ export default function App() {
         
         {/* Right Sidebar / Bottom Sheet containing Route Panel and Flight Board */}
         <div 
-          className={`fixed z-20 flex flex-col pointer-events-none transition-transform duration-500 ease-out transform
+          className={`fixed z-20 flex flex-col pointer-events-none transition-all duration-300 ease-out transform
             bottom-0 left-0 right-0 w-full h-[var(--mobile-height)] border-t border-slate-700/50 rounded-t-2xl
             md:top-0 md:right-0 md:bottom-0 md:left-auto md:w-80 md:!h-full md:border-t-0 md:border-l md:rounded-none
             ${selectedAirportCode || routeFlights.length > 0 
@@ -136,13 +119,10 @@ export default function App() {
             } bg-slate-900/85 backdrop-blur-xl shadow-2xl pointer-events-auto`}
           style={{ '--mobile-height': `${panelHeight}vh` }}
         >
-          {/* Drag Handle for mobile */}
+          {/* Toggle Handle for mobile */}
           <div 
-            className="w-full h-6 flex items-center justify-center cursor-grab active:cursor-grabbing md:hidden shrink-0 touch-none"
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerCancel={handlePointerUp}
+            className="w-full h-8 flex items-center justify-center cursor-pointer md:hidden shrink-0 hover:bg-slate-800/50 transition-colors rounded-t-2xl"
+            onClick={handleTogglePanel}
           >
             <div className="w-12 h-1.5 bg-slate-600 rounded-full" />
           </div>
