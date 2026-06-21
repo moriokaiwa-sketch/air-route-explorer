@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import MapContainer from './components/MapContainer';
+import FlightBoard from './components/FlightBoard';
 import { AIRPORTS } from './data/airports';
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
@@ -28,6 +29,11 @@ export default function App() {
           airports={AIRPORTS}
           selectedAirportCode={selectedAirportCode}
           onSelectAirport={setSelectedAirportCode}
+        />
+        <FlightBoard 
+          airportCode={selectedAirportCode} 
+          airportName={selectedAirport ? selectedAirport.name : ''}
+          onClose={() => setSelectedAirportCode(null)} 
         />
       </div>
     </APIProvider>
