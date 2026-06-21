@@ -30,10 +30,15 @@ export default function MapPolylines({ origin, airports, routeFlights = [] }) {
         });
         polylines.push({ polyline });
       });
-    } else if (origin) {
+    }
+    
+    if (origin) {
       origin.connections.forEach(targetCode => {
         const target = airports.find(a => a.code === targetCode);
         if (!target) return;
+
+        const isAlreadyInRoute = routeFlights && routeFlights.some(r => r.from === origin.code && r.to === targetCode);
+        if (isAlreadyInRoute) return;
 
         const path = [
           { lat: origin.lat, lng: origin.lng },
@@ -44,8 +49,8 @@ export default function MapPolylines({ origin, airports, routeFlights = [] }) {
           path,
           geodesic: true,
           strokeColor: '#CC0000',
-          strokeOpacity: 0.8,
-          strokeWeight: 3,
+          strokeOpacity: routeFlights && routeFlights.length > 0 ? 0.3 : 0.8,
+          strokeWeight: routeFlights && routeFlights.length > 0 ? 2 : 3,
           map,
         });
 

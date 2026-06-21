@@ -41,12 +41,13 @@ export default function MapContainer({ airports, selectedAirportCode, onSelectAi
         if (routeFlights && routeFlights.length > 0) {
           const inRoute = routeFlights.some(r => r.from === airport.code || r.to === airport.code);
           const isCurrentSelection = selectedAirportCode === airport.code;
+          const isNextDest = selectedAirport && selectedAirport.connections.includes(airport.code);
           
-          if (!inRoute && !isCurrentSelection) {
+          if (!inRoute && !isCurrentSelection && !isNextDest) {
             isHidden = true;
           } else {
             isSelected = isCurrentSelection;
-            isConnected = inRoute && !isCurrentSelection;
+            isConnected = inRoute || isNextDest;
           }
         } else {
           isSelected = selectedAirportCode === airport.code;
