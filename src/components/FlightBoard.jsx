@@ -54,7 +54,8 @@ const FlightBoard = ({ airportCode, airportName, destinationFilterCode, onClose,
           </div>
           <button 
             onClick={onClose}
-            className="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-full w-7 h-7 flex items-center justify-center transition-colors text-sm"
+            className="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-full w-8 h-8 flex items-center justify-center transition-colors text-sm ml-2 shrink-0"
+            aria-label="閉じる"
           >
             ✕
           </button>

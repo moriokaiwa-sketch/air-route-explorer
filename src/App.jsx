@@ -94,11 +94,15 @@ export default function App() {
           destinationFilterCode={destinationFilterCode}
         />
         
-        {/* Right Sidebar containing Route Panel and Flight Board */}
+        {/* Right Sidebar / Bottom Sheet containing Route Panel and Flight Board */}
         <div 
-          className={`fixed top-0 right-0 bottom-0 z-20 flex flex-col pointer-events-none transition-transform duration-500 ease-out transform ${
-            selectedAirportCode || routeFlights.length > 0 ? 'translate-x-0' : 'translate-x-full'
-          } w-80 bg-slate-900/85 backdrop-blur-xl border-l border-slate-700/50 shadow-2xl pointer-events-auto`}
+          className={`fixed z-20 flex flex-col pointer-events-none transition-transform duration-500 ease-out transform
+            bottom-0 left-0 right-0 w-full h-[50vh] border-t border-slate-700/50 rounded-t-2xl
+            md:top-0 md:right-0 md:bottom-0 md:left-auto md:w-80 md:h-full md:border-t-0 md:border-l md:rounded-none
+            ${selectedAirportCode || routeFlights.length > 0 
+              ? 'translate-y-0 md:translate-y-0 md:translate-x-0' 
+              : 'translate-y-full md:translate-y-0 md:translate-x-full'
+            } bg-slate-900/85 backdrop-blur-xl shadow-2xl pointer-events-auto`}
         >
           <RoutePanel 
             routeFlights={routeFlights} 
