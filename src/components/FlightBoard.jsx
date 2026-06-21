@@ -89,6 +89,7 @@ const FlightBoard = ({ airportCode, airportName, onClose, onSelectFlight }) => {
         </div>
       </div>
     </div>
+  );
 };
 
 export default FlightBoard;
