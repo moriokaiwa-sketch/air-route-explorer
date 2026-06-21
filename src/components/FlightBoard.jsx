@@ -70,34 +70,16 @@ const FlightBoard = ({ airportCode, airportName, onClose }) => {
               <thead className="sticky top-0 bg-slate-900/95 backdrop-blur-sm z-10 text-slate-400 text-xs uppercase">
                 <tr>
                   <th className="py-3 px-3 font-medium">定刻</th>
-                  <th className="py-3 px-3 font-medium">変更</th>
                   <th className="py-3 px-3 font-medium">行先</th>
                   <th className="py-3 px-3 font-medium">便名</th>
-                  <th className="py-3 px-3 font-medium">搭乗口</th>
-                  <th className="py-3 px-3 font-medium">備考</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-700/50">
                 {flights.map((flight) => (
                   <tr key={flight.id} className="hover:bg-slate-800/50 transition-colors text-white group">
                     <td className="py-3 px-3 text-lg font-semibold tracking-tight">{flight.scheduledTime}</td>
-                    <td className="py-3 px-3 text-red-400 font-bold tracking-tight">{flight.estimatedTime || ''}</td>
                     <td className="py-3 px-3 font-medium text-base">{flight.destinationName}</td>
                     <td className="py-3 px-3 text-slate-300 font-mono text-sm">{flight.flightNumber}</td>
-                    <td className="py-3 px-3">
-                      {flight.gate !== '-' ? (
-                        <span className="bg-slate-800 border border-slate-700 text-slate-300 px-2.5 py-1 rounded text-xs font-mono">{flight.gate}</span>
-                      ) : <span className="text-slate-600">-</span>}
-                    </td>
-                    <td className="py-3 px-3">
-                      <span className={`px-2.5 py-1 rounded text-xs font-medium ${
-                        flight.statusRaw === 'Delayed' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' :
-                        flight.statusRaw === 'Cancelled' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
-                        'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                      }`}>
-                        {flight.status}
-                      </span>
-                    </td>
                   </tr>
                 ))}
               </tbody>
