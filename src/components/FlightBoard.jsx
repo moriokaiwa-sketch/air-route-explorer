@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { fetchDepartingFlights } from '../api/odptApi';
 
-const FlightBoard = ({ airportCode, airportName, onClose }) => {
+const FlightBoard = ({ airportCode, airportName, onClose, onSelectFlight }) => {
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(false);
   const containerRef = useRef(null);
@@ -76,8 +76,12 @@ const FlightBoard = ({ airportCode, airportName, onClose }) => {
               </thead>
               <tbody className="divide-y divide-slate-700/50">
                 {flights.map((flight) => (
-                  <tr key={flight.id} className="hover:bg-slate-800/50 transition-colors text-white group">
-                    <td className="py-2.5 px-1 text-base font-semibold tracking-tight">{flight.scheduledTime}</td>
+                  <tr 
+                    key={flight.id} 
+                    className="hover:bg-slate-800/80 transition-colors text-white group cursor-pointer"
+                    onClick={() => onSelectFlight && onSelectFlight(flight)}
+                  >
+                    <td className="py-2.5 px-1 text-base font-semibold tracking-tight group-hover:text-emerald-400 transition-colors">{flight.scheduledTime}</td>
                     <td className="py-2.5 px-1 font-medium text-sm">{flight.destinationName}</td>
                     <td className="py-2.5 px-1 text-slate-300 font-mono text-xs text-right">{flight.flightNumber}</td>
                   </tr>
