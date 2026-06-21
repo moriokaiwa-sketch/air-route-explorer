@@ -30,24 +30,24 @@ const FlightBoard = ({ airportCode, airportName, onClose }) => {
 
   return (
     <div 
-      className={`fixed bottom-0 left-0 right-0 z-20 flex justify-center pb-6 px-4 pointer-events-none transition-all duration-500 ease-out transform ${
-        airportCode ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
+      className={`fixed top-0 right-0 bottom-0 z-20 flex pointer-events-none transition-transform duration-500 ease-out transform ${
+        airportCode ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
-      <div className="bg-slate-900/85 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl w-full max-w-4xl p-6 pointer-events-auto flex flex-col max-h-[45vh]">
+      <div className="bg-slate-900/85 backdrop-blur-xl border-l border-slate-700/50 shadow-2xl w-80 p-4 pointer-events-auto flex flex-col h-full">
         
-        <div className="flex justify-between items-center mb-4 shrink-0">
-          <div className="flex items-center gap-3">
-            <h2 className="text-xl font-bold tracking-wider text-white">{airportName} 出発便案内</h2>
+        <div className="flex justify-between items-start mb-4 shrink-0">
+          <div className="flex flex-col gap-1">
+            <h2 className="text-lg font-bold tracking-wider text-white">{airportName} 出発</h2>
             {loading ? (
-              <span className="text-xs text-slate-400 animate-pulse">更新中...</span>
+              <span className="text-[11px] text-slate-400 animate-pulse">更新中...</span>
             ) : (
-              <span className="text-xs text-slate-400">本日のフライト (JAL)</span>
+              <span className="text-[11px] text-slate-400">本日のフライト (JAL)</span>
             )}
           </div>
           <button 
             onClick={onClose}
-            className="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-full w-8 h-8 flex items-center justify-center transition-colors"
+            className="text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 rounded-full w-7 h-7 flex items-center justify-center transition-colors text-sm"
           >
             ✕
           </button>
@@ -67,19 +67,19 @@ const FlightBoard = ({ airportCode, airportName, onClose }) => {
             </div>
           ) : (
             <table className="w-full text-left text-sm whitespace-nowrap">
-              <thead className="sticky top-0 bg-slate-900/95 backdrop-blur-sm z-10 text-slate-400 text-xs uppercase">
+              <thead className="sticky top-0 bg-slate-900/95 backdrop-blur-sm z-10 text-slate-400 text-[11px] uppercase">
                 <tr>
-                  <th className="py-3 px-3 font-medium">定刻</th>
-                  <th className="py-3 px-3 font-medium">行先</th>
-                  <th className="py-3 px-3 font-medium">便名</th>
+                  <th className="py-2 px-1 font-medium">定刻</th>
+                  <th className="py-2 px-1 font-medium">行先</th>
+                  <th className="py-2 px-1 font-medium text-right">便名</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-700/50">
                 {flights.map((flight) => (
                   <tr key={flight.id} className="hover:bg-slate-800/50 transition-colors text-white group">
-                    <td className="py-3 px-3 text-lg font-semibold tracking-tight">{flight.scheduledTime}</td>
-                    <td className="py-3 px-3 font-medium text-base">{flight.destinationName}</td>
-                    <td className="py-3 px-3 text-slate-300 font-mono text-sm">{flight.flightNumber}</td>
+                    <td className="py-2.5 px-1 text-base font-semibold tracking-tight">{flight.scheduledTime}</td>
+                    <td className="py-2.5 px-1 font-medium text-sm">{flight.destinationName}</td>
+                    <td className="py-2.5 px-1 text-slate-300 font-mono text-xs text-right">{flight.flightNumber}</td>
                   </tr>
                 ))}
               </tbody>
