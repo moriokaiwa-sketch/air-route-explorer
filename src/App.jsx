@@ -24,6 +24,17 @@ export default function App() {
     setSelectedAirportCode(null);
   };
 
+  const handleRemoveFlight = (index) => {
+    const newRouteFlights = routeFlights.filter((_, i) => i !== index);
+    setRouteFlights(newRouteFlights);
+    
+    if (newRouteFlights.length === 0) {
+      setSelectedAirportCode(null);
+    } else if (index === routeFlights.length - 1) {
+      setSelectedAirportCode(newRouteFlights[newRouteFlights.length - 1].to);
+    }
+  };
+
   if (!API_KEY) {
     return (
       <div className="flex items-center justify-center w-full h-screen bg-gray-900 text-white p-8 text-center">
@@ -51,7 +62,11 @@ export default function App() {
             selectedAirportCode || routeFlights.length > 0 ? 'translate-x-0' : 'translate-x-full'
           } w-80 bg-slate-900/85 backdrop-blur-xl border-l border-slate-700/50 shadow-2xl pointer-events-auto`}
         >
-          <RoutePanel routeFlights={routeFlights} onClear={handleClearRoute} />
+          <RoutePanel 
+            routeFlights={routeFlights} 
+            onClear={handleClearRoute} 
+            onRemoveFlight={handleRemoveFlight}
+          />
           
           <FlightBoard 
             airportCode={selectedAirportCode} 
