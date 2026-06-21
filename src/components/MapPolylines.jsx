@@ -49,8 +49,8 @@ export default function MapPolylines({ origin, airports, routeFlights = [] }) {
           path,
           geodesic: true,
           strokeColor: '#CC0000',
-          strokeOpacity: routeFlights && routeFlights.length > 0 ? 0.3 : 0.8,
-          strokeWeight: routeFlights && routeFlights.length > 0 ? 2 : 3,
+          strokeOpacity: 0.8,
+          strokeWeight: 3,
           map,
         });
 

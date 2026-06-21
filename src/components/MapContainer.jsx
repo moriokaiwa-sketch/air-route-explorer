@@ -73,13 +73,7 @@ export default function MapContainer({ airports, selectedAirportCode, onSelectAi
           glyphColor = '#ffffff';
           scale = 1.0;
           zIndex = 50;
-        } else if (isNextDest && routeFlights && routeFlights.length > 0) {
-          background = '#ffffff';
-          borderColor = '#CC0000'; // Red border for next possible destinations
-          glyphColor = '#CC0000';
-          scale = 0.8;
-          zIndex = 40;
-        } else if (isNextDest && (!routeFlights || routeFlights.length === 0)) {
+        } else if (isNextDest) {
           background = '#ffffff';
           borderColor = '#cccccc';
           glyphColor = '#000000';
