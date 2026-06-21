@@ -9,14 +9,51 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
 
 export default function App() {
   const [selectedAirportCode, setSelectedAirportCode] = useState(null);
+  const [destinationFilterCode, setDestinationFilterCode] = useState(null);
   const [routeFlights, setRouteFlights] = useState([]);
 
   const selectedAirport = AIRPORTS.find(a => a.code === selectedAirportCode);
+
+  const handleSelectAirport = (clickedCode) => {
+    if (!clickedCode) {
+      setSelectedAirportCode(null);
+      setDestinationFilterCode(null);
+      return;
+    }
+
+    if (!selectedAirportCode) {
+      // First selection
+      setSelectedAirportCode(clickedCode);
+      setDestinationFilterCode(null);
+      return;
+    }
+
+    if (clickedCode === selectedAirportCode) {
+      // Clicking the already selected origin again toggles filter off
+      setDestinationFilterCode(null);
+      return;
+    }
+
+    // If an origin is selected, and we click a connected airport, use it as a destination filter
+    if (selectedAirport && selectedAirport.connections.includes(clickedCode)) {
+      if (destinationFilterCode === clickedCode) {
+        // Toggle filter off if clicked again
+        setDestinationFilterCode(null);
+      } else {
+        setDestinationFilterCode(clickedCode);
+      }
+    } else {
+      // Clicking somewhere else: start a new selection from that airport
+      setSelectedAirportCode(clickedCode);
+      setDestinationFilterCode(null);
+    }
+  };
 
   const handleSelectFlight = (flight) => {
     if (!flight.destinationCode) return;
     setRouteFlights([...routeFlights, { from: selectedAirportCode, to: flight.destinationCode, flight }]);
     setSelectedAirportCode(flight.destinationCode);
+    setDestinationFilterCode(null); // Reset filter
   };
 
   const handleClearRoute = () => {
@@ -52,8 +89,9 @@ export default function App() {
         <MapContainer 
           airports={AIRPORTS}
           selectedAirportCode={selectedAirportCode}
-          onSelectAirport={setSelectedAirportCode}
+          onSelectAirport={handleSelectAirport}
           routeFlights={routeFlights}
+          destinationFilterCode={destinationFilterCode}
         />
         
         {/* Right Sidebar containing Route Panel and Flight Board */}
@@ -71,7 +109,11 @@ export default function App() {
           <FlightBoard 
             airportCode={selectedAirportCode} 
             airportName={selectedAirport ? selectedAirport.name : ''}
-            onClose={() => setSelectedAirportCode(null)} 
+            destinationFilterCode={destinationFilterCode}
+            onClose={() => {
+              setSelectedAirportCode(null);
+              setDestinationFilterCode(null);
+            }} 
             onSelectFlight={handleSelectFlight}
           />
         </div>

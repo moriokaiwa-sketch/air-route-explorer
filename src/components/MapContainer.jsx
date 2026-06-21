@@ -20,7 +20,7 @@ const mapOptions = {
   backgroundColor: '#17263c',
 };
 
-export default function MapContainer({ airports, selectedAirportCode, onSelectAirport, routeFlights = [] }) {
+export default function MapContainer({ airports, selectedAirportCode, onSelectAirport, routeFlights = [], destinationFilterCode }) {
   const selectedAirport = useMemo(() => airports.find(a => a.code === selectedAirportCode), [airports, selectedAirportCode]);
 
   return (
@@ -36,6 +36,7 @@ export default function MapContainer({ airports, selectedAirportCode, onSelectAi
         let isSelected = false;
         let inRoute = false;
         let isNextDest = false;
+        let isFilteredDest = false;
         let isFaded = false;
         let isHidden = false;
 
@@ -43,6 +44,7 @@ export default function MapContainer({ airports, selectedAirportCode, onSelectAi
           inRoute = routeFlights.some(r => r.from === airport.code || r.to === airport.code);
           isSelected = selectedAirportCode === airport.code;
           isNextDest = selectedAirport && selectedAirport.connections.includes(airport.code);
+          isFilteredDest = isNextDest && destinationFilterCode === airport.code;
           
           if (!inRoute && !isSelected && !isNextDest) {
             isHidden = true;
@@ -50,6 +52,7 @@ export default function MapContainer({ airports, selectedAirportCode, onSelectAi
         } else {
           isSelected = selectedAirportCode === airport.code;
           isNextDest = selectedAirport && selectedAirport.connections.includes(airport.code);
+          isFilteredDest = isNextDest && destinationFilterCode === airport.code;
           isFaded = selectedAirportCode && !isSelected && !isNextDest;
         }
 
@@ -67,6 +70,13 @@ export default function MapContainer({ airports, selectedAirportCode, onSelectAi
           glyphColor = '#ffffff';
           scale = 1.2;
           zIndex = 100;
+        } else if (isFilteredDest) {
+          // Highlight the filtered destination
+          background = '#f59e0b'; // Amber-500
+          borderColor = '#b45309';
+          glyphColor = '#ffffff';
+          scale = 1.2;
+          zIndex = 75;
         } else if (inRoute) {
           background = '#10B981'; // Emerald for confirmed route
           borderColor = '#047857';
