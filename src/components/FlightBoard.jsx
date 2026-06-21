@@ -88,7 +88,6 @@ const FlightBoard = ({ airportCode, airportName, onClose, onSelectFlight }) => {
           )}
         </div>
       </div>
-    </div>
   );
 };
 
