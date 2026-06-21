@@ -41,15 +41,13 @@ const FlightBoard = ({ airportCode, airportName, destinationFilterCode, onClose,
   return (
     <div className="flex flex-col h-full overflow-hidden p-4 pt-2">
         
-        <div className="flex justify-between items-start mb-4 shrink-0">
-          <div className="flex flex-col gap-1">
+        <div className="flex justify-between items-start mb-2 shrink-0">
+          <div className="flex flex-col">
             <h2 className="text-lg font-bold tracking-wider text-white">
               {destinationFilterCode ? `${airportName} → ${filterDestName}` : `${airportName} 出発`}
             </h2>
-            {loading ? (
-              <span className="text-[11px] text-slate-400 animate-pulse">更新中...</span>
-            ) : (
-              <span className="text-[11px] text-slate-400">本日のフライト (JAL)</span>
+            {loading && (
+              <span className="text-[11px] text-slate-400 animate-pulse mt-1">更新中...</span>
             )}
           </div>
           <button 
