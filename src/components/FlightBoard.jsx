@@ -28,13 +28,10 @@ const FlightBoard = ({ airportCode, airportName, onClose, onSelectFlight }) => {
     return () => { isMounted = false; };
   }, [airportCode]);
 
+  if (!airportCode) return null;
+
   return (
-    <div 
-      className={`fixed top-0 right-0 bottom-0 z-20 flex pointer-events-none transition-transform duration-500 ease-out transform ${
-        airportCode ? 'translate-x-0' : 'translate-x-full'
-      }`}
-    >
-      <div className="bg-slate-900/85 backdrop-blur-xl border-l border-slate-700/50 shadow-2xl w-80 p-4 pointer-events-auto flex flex-col h-full">
+    <div className="flex flex-col h-full overflow-hidden p-4 pt-2">
         
         <div className="flex justify-between items-start mb-4 shrink-0">
           <div className="flex flex-col gap-1">
@@ -92,7 +89,6 @@ const FlightBoard = ({ airportCode, airportName, onClose, onSelectFlight }) => {
         </div>
       </div>
     </div>
-  );
 };
 
 export default FlightBoard;

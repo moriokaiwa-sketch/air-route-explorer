@@ -9,7 +9,7 @@ const RoutePanel = ({ routeFlights, onClear }) => {
   const firstAirport = AIRPORTS.find(a => a.code === firstFlight.from) || { name: firstFlight.from };
 
   return (
-    <div className="fixed top-4 right-4 z-30 w-80 bg-slate-900/90 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl p-4 pointer-events-auto">
+    <div className="p-4 shrink-0 pb-2 border-b border-slate-700/50 mb-2">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-sm font-bold tracking-wider text-white">選択ルート</h2>
         <button 

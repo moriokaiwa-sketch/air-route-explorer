@@ -44,13 +44,22 @@ export default function App() {
           onSelectAirport={setSelectedAirportCode}
           routeFlights={routeFlights}
         />
-        <RoutePanel routeFlights={routeFlights} onClear={handleClearRoute} />
-        <FlightBoard 
-          airportCode={selectedAirportCode} 
-          airportName={selectedAirport ? selectedAirport.name : ''}
-          onClose={() => setSelectedAirportCode(null)} 
-          onSelectFlight={handleSelectFlight}
-        />
+        
+        {/* Right Sidebar containing Route Panel and Flight Board */}
+        <div 
+          className={`fixed top-0 right-0 bottom-0 z-20 flex flex-col pointer-events-none transition-transform duration-500 ease-out transform ${
+            selectedAirportCode || routeFlights.length > 0 ? 'translate-x-0' : 'translate-x-full'
+          } w-80 bg-slate-900/85 backdrop-blur-xl border-l border-slate-700/50 shadow-2xl pointer-events-auto`}
+        >
+          <RoutePanel routeFlights={routeFlights} onClear={handleClearRoute} />
+          
+          <FlightBoard 
+            airportCode={selectedAirportCode} 
+            airportName={selectedAirport ? selectedAirport.name : ''}
+            onClose={() => setSelectedAirportCode(null)} 
+            onSelectFlight={handleSelectFlight}
+          />
+        </div>
       </div>
     </APIProvider>
   );
