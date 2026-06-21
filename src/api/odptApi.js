@@ -15,16 +15,32 @@ export const fetchDepartingFlights = async (airportCode) => {
   }
 
   try {
-    const url = `${ODPT_BASE_URL}/odpt:FlightInformationDeparture?odpt:operator=odpt.Operator:JAL&odpt:departureAirport=odpt.Airport:${airportCode}&acl:consumerKey=${ACCESS_TOKEN}`;
+    const departureUrl = `${ODPT_BASE_URL}/odpt:FlightInformationDeparture?odpt:operator=odpt.Operator:JAL&odpt:departureAirport=odpt.Airport:${airportCode}&acl:consumerKey=${ACCESS_TOKEN}`;
+    const arrivalUrl = `${ODPT_BASE_URL}/odpt:FlightInformationArrival?odpt:operator=odpt.Operator:JAL&odpt:originAirport=odpt.Airport:${airportCode}&acl:consumerKey=${ACCESS_TOKEN}`;
     
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch from ODPT API: ${response.statusText}`);
+    const [depResponse, arrResponse] = await Promise.all([
+      fetch(departureUrl),
+      fetch(arrivalUrl)
+    ]);
+
+    if (!depResponse.ok || !arrResponse.ok) {
+      throw new Error(`Failed to fetch from ODPT API`);
     }
 
-    const data = await response.json();
+    const [depData, arrData] = await Promise.all([
+      depResponse.json(),
+      arrResponse.json()
+    ]);
 
-    const flights = data.map(flight => {
+    const arrLookup = {};
+    arrData.forEach(flight => {
+      const fn = flight['odpt:flightNumber'] ? flight['odpt:flightNumber'][0] : null;
+      if (fn) {
+        arrLookup[fn] = flight['odpt:scheduledArrivalTime'];
+      }
+    });
+
+    const flights = depData.map(flight => {
       let terminal = 'TBD';
       if (flight['odpt:departureAirportTerminal']) {
         const parts = flight['odpt:departureAirportTerminal'].split('.');
@@ -55,6 +71,7 @@ export const fetchDepartingFlights = async (airportCode) => {
         destinationCode,
         destinationName,
         scheduledTime: flight['odpt:scheduledDepartureTime'], 
+        scheduledArrivalTime: arrLookup[flightNumber],
         estimatedTime: flight['odpt:estimatedDepartureTime'], 
         actualTime: flight['odpt:actualDepartureTime'],
         terminal,

@@ -39,7 +39,13 @@ const RoutePanel = ({ routeFlights, onClear }) => {
             <div className="ml-6 flex-1 bg-slate-800/50 rounded-lg p-2 border border-slate-700/50">
               <div className="flex justify-between items-baseline mb-1">
                 <span className="text-[11px] text-slate-400 font-mono">{segment.flight.flightNumber}</span>
-                <span className="text-xs font-semibold text-white">{segment.flight.scheduledTime}発</span>
+                <span className="text-xs font-semibold text-white">
+                  {segment.flight.scheduledTime}
+                  {segment.flight.scheduledArrivalTime && (
+                    <span className="text-[10px] text-slate-400 font-normal ml-1">- {segment.flight.scheduledArrivalTime}着</span>
+                  )}
+                  {!segment.flight.scheduledArrivalTime && '発'}
+                </span>
               </div>
               <div className="text-sm font-bold text-slate-200">{segment.flight.destinationName}</div>
             </div>

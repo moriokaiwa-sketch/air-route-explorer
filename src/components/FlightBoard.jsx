@@ -78,8 +78,13 @@ const FlightBoard = ({ airportCode, airportName, onClose, onSelectFlight }) => {
                     className="hover:bg-slate-800/80 transition-colors text-white group cursor-pointer"
                     onClick={() => onSelectFlight && onSelectFlight(flight)}
                   >
-                    <td className="py-2.5 px-1 text-base font-semibold tracking-tight group-hover:text-emerald-400 transition-colors">{flight.scheduledTime}</td>
-                    <td className="py-2.5 px-1 font-medium text-sm">{flight.destinationName}</td>
+                    <td className="py-2.5 px-1 font-semibold tracking-tight group-hover:text-emerald-400 transition-colors whitespace-nowrap">
+                      <span className="text-base">{flight.scheduledTime}</span>
+                      {flight.scheduledArrivalTime && (
+                        <span className="text-xs text-slate-400 ml-1 font-normal tracking-normal">- {flight.scheduledArrivalTime}着</span>
+                      )}
+                    </td>
+                    <td className="py-2.5 px-2 font-medium text-sm">{flight.destinationName}</td>
                     <td className="py-2.5 px-1 text-slate-300 font-mono text-xs text-right">{flight.flightNumber}</td>
                   </tr>
                 ))}
