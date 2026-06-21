@@ -11,8 +11,16 @@ export default function App() {
   const [selectedAirportCode, setSelectedAirportCode] = useState(null);
   const [destinationFilterCode, setDestinationFilterCode] = useState(null);
   const [routeFlights, setRouteFlights] = useState([]);
-  const [panelHeight, setPanelHeight] = useState(45); // default height in vh
+  const [panelHeight, setPanelHeight] = useState(40); // default height in vh
   const dragRef = React.useRef(null);
+
+  const isPanelOpen = selectedAirportCode || routeFlights.length > 0;
+
+  React.useEffect(() => {
+    if (!isPanelOpen) {
+      setPanelHeight(40);
+    }
+  }, [isPanelOpen]);
 
   const selectedAirport = AIRPORTS.find(a => a.code === selectedAirportCode);
 
