@@ -75,6 +75,7 @@ export const AIRPORTS = [
       "KMI",
       "KMJ",
       "KOJ",
+      "KUM",
       "MMB",
       "MMJ",
       "MSJ",
@@ -131,6 +132,7 @@ export const AIRPORTS = [
       "IZO",
       "KIJ",
       "KIX",
+      "MMB",
       "NGO",
       "NRT",
       "SDJ"
@@ -169,6 +171,7 @@ export const AIRPORTS = [
       "KIJ",
       "KMI",
       "KOJ",
+      "KUM",
       "MYJ",
       "NRT",
       "OKA",
@@ -195,6 +198,7 @@ export const AIRPORTS = [
       "NGO",
       "NRT",
       "OGN",
+      "OKE",
       "OKJ",
       "RNJ",
       "UEO"
@@ -245,6 +249,7 @@ export const AIRPORTS = [
     "lat": 43.8805,
     "lng": 144.1633,
     "connections": [
+      "CTS",
       "HND",
       "ITM",
       "OKD"
@@ -428,7 +433,8 @@ export const AIRPORTS = [
       "CTS",
       "FUK",
       "HND",
-      "ITM"
+      "ITM",
+      "OKI"
     ]
   },
   {
@@ -437,7 +443,8 @@ export const AIRPORTS = [
     "lat": 36.1804,
     "lng": 133.3245,
     "connections": [
-      "ITM"
+      "ITM",
+      "IZO"
     ]
   },
   {
@@ -566,6 +573,8 @@ export const AIRPORTS = [
     "lat": 30.3846,
     "lng": 130.6596,
     "connections": [
+      "FUK",
+      "ITM",
       "KOJ"
     ]
   },
@@ -591,6 +600,7 @@ export const AIRPORTS = [
       "KKX",
       "KOJ",
       "OKA",
+      "RNJ",
       "TKN"
     ]
   },
@@ -612,6 +622,7 @@ export const AIRPORTS = [
     "lng": 128.6015,
     "connections": [
       "KOJ",
+      "OKA",
       "RNJ",
       "TKN"
     ]
@@ -622,6 +633,7 @@ export const AIRPORTS = [
     "lat": 27.0436,
     "lng": 128.4018,
     "connections": [
+      "ASJ",
       "KOJ",
       "OKA",
       "OKE"
@@ -644,6 +656,7 @@ export const AIRPORTS = [
     "lng": 125.295,
     "connections": [
       "HND",
+      "ISG",
       "KIX",
       "NGO",
       "OKA",
@@ -668,6 +681,7 @@ export const AIRPORTS = [
       "FUK",
       "HND",
       "KIX",
+      "MMY",
       "NGO",
       "OGN",
       "OKA"
