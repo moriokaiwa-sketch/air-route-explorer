@@ -34,41 +34,77 @@ export default function MapContainer({ airports, selectedAirportCode, onSelectAi
     >
       {airports.map(airport => {
         let isSelected = false;
-        let isConnected = false;
+        let inRoute = false;
+        let isNextDest = false;
         let isFaded = false;
         let isHidden = false;
 
         if (routeFlights && routeFlights.length > 0) {
-          const inRoute = routeFlights.some(r => r.from === airport.code || r.to === airport.code);
-          const isCurrentSelection = selectedAirportCode === airport.code;
-          const isNextDest = selectedAirport && selectedAirport.connections.includes(airport.code);
+          inRoute = routeFlights.some(r => r.from === airport.code || r.to === airport.code);
+          isSelected = selectedAirportCode === airport.code;
+          isNextDest = selectedAirport && selectedAirport.connections.includes(airport.code);
           
-          if (!inRoute && !isCurrentSelection && !isNextDest) {
+          if (!inRoute && !isSelected && !isNextDest) {
             isHidden = true;
-          } else {
-            isSelected = isCurrentSelection;
-            isConnected = inRoute || isNextDest;
           }
         } else {
           isSelected = selectedAirportCode === airport.code;
-          isConnected = selectedAirport && selectedAirport.connections.includes(airport.code);
-          isFaded = selectedAirportCode && !isSelected && !isConnected;
+          isNextDest = selectedAirport && selectedAirport.connections.includes(airport.code);
+          isFaded = selectedAirportCode && !isSelected && !isNextDest;
         }
 
         if (isHidden) return null;
+
+        let background = '#ffffff';
+        let borderColor = '#cccccc';
+        let glyphColor = '#000000';
+        let scale = 1.0;
+        let zIndex = 10;
+
+        if (isSelected) {
+          background = '#CC0000';
+          borderColor = '#7A0000';
+          glyphColor = '#ffffff';
+          scale = 1.2;
+          zIndex = 100;
+        } else if (inRoute) {
+          background = '#10B981'; // Emerald for confirmed route
+          borderColor = '#047857';
+          glyphColor = '#ffffff';
+          scale = 1.0;
+          zIndex = 50;
+        } else if (isNextDest && routeFlights && routeFlights.length > 0) {
+          background = '#ffffff';
+          borderColor = '#CC0000'; // Red border for next possible destinations
+          glyphColor = '#CC0000';
+          scale = 0.8;
+          zIndex = 40;
+        } else if (isNextDest && (!routeFlights || routeFlights.length === 0)) {
+          background = '#ffffff';
+          borderColor = '#cccccc';
+          glyphColor = '#000000';
+          scale = 1.0;
+          zIndex = 50;
+        } else if (isFaded) {
+          background = '#ffffff44';
+          borderColor = '#cccccc44';
+          glyphColor = 'transparent';
+          scale = 0.6;
+          zIndex = 10;
+        }
 
         return (
           <AdvancedMarker
             key={airport.code}
             position={{ lat: airport.lat, lng: airport.lng }}
             onClick={() => onSelectAirport(airport.code)}
-            zIndex={isSelected ? 100 : (isConnected ? 50 : 10)}
+            zIndex={zIndex}
           >
             <Pin
-              background={isSelected ? '#CC0000' : (isConnected && routeFlights.length > 0 ? '#10B981' : (isFaded ? '#ffffff44' : '#ffffff'))}
-              borderColor={isSelected ? '#7A0000' : (isConnected && routeFlights.length > 0 ? '#047857' : (isFaded ? '#cccccc44' : '#cccccc'))}
-              glyphColor={isSelected ? '#ffffff' : (isConnected && routeFlights.length > 0 ? '#ffffff' : (isFaded ? 'transparent' : '#000000'))}
-              scale={isSelected ? 1.2 : (isConnected && routeFlights.length > 0 ? 1.0 : (isFaded ? 0.6 : 1))}
+              background={background}
+              borderColor={borderColor}
+              glyphColor={glyphColor}
+              scale={scale}
             />
           </AdvancedMarker>
         );
