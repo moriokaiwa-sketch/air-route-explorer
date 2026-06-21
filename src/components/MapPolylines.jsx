@@ -37,7 +37,11 @@ export default function MapPolylines({ origin, airports, routeFlights = [] }) {
         const target = airports.find(a => a.code === targetCode);
         if (!target) return;
 
-        const isAlreadyInRoute = routeFlights && routeFlights.some(r => r.from === origin.code && r.to === targetCode);
+        // Skip if this segment (in either direction) is already in the route
+        const isAlreadyInRoute = routeFlights && routeFlights.some(r => 
+          (r.from === origin.code && r.to === targetCode) || 
+          (r.from === targetCode && r.to === origin.code)
+        );
         if (isAlreadyInRoute) return;
 
         const path = [
